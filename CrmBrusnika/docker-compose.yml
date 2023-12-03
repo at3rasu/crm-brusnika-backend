@@ -6,3 +6,30 @@ services:
     build:
       context: .
       dockerfile: CrmBrusnika/Dockerfile
+    depends_on:
+      - postgres
+    restart: always
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      PG_DATA: /var/lib/postgresql/data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres_db
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=obuhowdaniil902@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=jo31fMLj0YfC1xa
+    ports:
+      - 5050:80
+    
+volumes:
+  pgdata:
+
