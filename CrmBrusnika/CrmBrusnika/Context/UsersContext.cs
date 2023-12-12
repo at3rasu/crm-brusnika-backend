@@ -7,6 +7,7 @@ namespace CrmBrusnika.Context
     {
         public UsersContext(DbContextOptions<UsersContext> options) : base(options) 
         { 
+
         }
 
         public DbSet<User> Users { get; set; }

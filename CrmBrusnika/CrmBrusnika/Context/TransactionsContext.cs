@@ -9,6 +9,6 @@ namespace CrmBrusnika.Context
         {
         }
 
-        public DbSet<Transaction> Users { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
     }
 }
