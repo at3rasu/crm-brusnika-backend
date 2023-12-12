@@ -15,8 +15,9 @@ services:
     environment:
       PG_DATA: /var/lib/postgresql/data
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres_db
+      POSTGRES_PASSWORD: jo31fMLj0YfC1xa
+      POSTGRES_DB: crm-brusnika
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - 5432:5432
     volumes:

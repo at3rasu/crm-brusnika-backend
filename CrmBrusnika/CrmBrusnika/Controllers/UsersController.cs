@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CrmBrusnika.Context;
+using CrmBrusnika.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
@@ -6,15 +9,31 @@ namespace CrmBrusnika.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetUsers()
+        private readonly UsersContext _context;
+        
+        public UsersController(UsersContext context)
         {
-            var users = new[]
-            {
-                new { Name = "vanya"},
-                new { Name = "ilya"}
-            };
-            return Ok(users);
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        [HttpPost]
+        [Route("/registration")]
+        public async Task<IActionResult> CreateUser(User user)
+        {
+            var newUser = new User(user.Email);
+            var u = await _context.Users.AddAsync(newUser);
+
+            await _context.SaveChangesAsync();
+
+            var users = GetUsers();
+
+            return Ok(u);
         }
     }
 }

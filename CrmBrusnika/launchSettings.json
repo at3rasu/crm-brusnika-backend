@@ -7,5 +7,10 @@
         "crmbrusnika": "StartDebugging"
       }
     }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "CrmBrusnikaDb": "Server=localhost;Port=5432;User id=postgres;password=jo31fMLj0YfC1xa;database=crm-brusnika",
+    "Redis": "localhost"
   }
 }
