@@ -35,5 +35,17 @@ namespace CrmBrusnika.Controllers
 
             return Ok(u);
         }
+
+        [Route("/v2")]
+        [HttpGet]
+        public IActionResult GetUsers2()
+        {
+            var users = new[]
+            {
+                new { Name = "123"},
+                new { Name = "2314423"}
+            };
+            return Ok(users);
+        }
     }
 }
