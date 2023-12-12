@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
-    [Route("api/transactions")]
+    [Route("api/transactions/")]
     [ApiController]
     public class TransactionsController : ControllerBase
     {
@@ -17,6 +17,20 @@ namespace CrmBrusnika.Controllers
         }
 
 
+        [Route("create")]
+        [HttpPost]
+        public async Task<IActionResult> createTransaction(Transaction transaction)
+        {
+            var newTransaction = await _context.Transactions.AddAsync(new Transaction(
+                transaction.RegisterNumber,
+                transaction.Adress,
+                transaction.Square,
+                transaction.AboutHolder,
+                transaction.Price,
+                transaction.SearchObject));
+            await _context.SaveChangesAsync();
 
+            return Ok(newTransaction);
+        }
     }
 }

@@ -14,9 +14,14 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
 
-builder.Services.AddDbContext<UsersContext>(options => {
+builder.Services.AddDbContext<DbContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
     }
+);
+
+builder.Services.AddDbContext<TransactionsContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
+}
 );
 builder.Services.AddControllersWithViews();
 
@@ -31,7 +36,6 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
                     .AllowCredentials();
                 }));
 builder.Services.AddCors();
-
 builder.Services.AddControllers();
 
 var app = builder.Build();

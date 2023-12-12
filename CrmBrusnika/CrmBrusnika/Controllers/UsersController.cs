@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
-    [Route("api/users")]
+    [Route("api/users/")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -17,13 +17,14 @@ namespace CrmBrusnika.Controllers
         }
 
         [HttpGet]
+        [Route("get-users")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
         }
 
         [HttpPost]
-        [Route("/registration")]
+        [Route("registration")]
         public async Task<IActionResult> CreateUser(User user)
         {
             var newUser = new User(user.Email);
@@ -34,18 +35,6 @@ namespace CrmBrusnika.Controllers
             var users = GetUsers();
 
             return Ok(u);
-        }
-
-        [Route("/v2")]
-        [HttpGet]
-        public IActionResult GetUsers2()
-        {
-            var users = new[]
-            {
-                new { Name = "123"},
-                new { Name = "2314423"}
-            };
-            return Ok(users);
         }
     }
 }
