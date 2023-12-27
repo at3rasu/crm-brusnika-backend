@@ -6,7 +6,7 @@ namespace CrmBrusnika.Context
     public class UsersContext: DbContext
     {
         public UsersContext(DbContextOptions<UsersContext> options) : base(options) 
-        { 
+        {
 
         }
 
