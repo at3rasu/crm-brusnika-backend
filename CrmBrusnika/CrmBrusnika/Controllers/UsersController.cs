@@ -32,7 +32,6 @@ namespace CrmBrusnika.Controllers
 
             await _context.SaveChangesAsync();
 
-            var users = GetUsers();
 
             return Ok(u);
         }
