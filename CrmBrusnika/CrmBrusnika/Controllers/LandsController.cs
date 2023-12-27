@@ -1,6 +1,6 @@
 ﻿namespace CrmBrusnika.Controllers
 {
-    public class LandController
+    public class LandsController
     {
     }
 }

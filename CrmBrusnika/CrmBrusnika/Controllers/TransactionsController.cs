@@ -21,7 +21,7 @@ namespace CrmBrusnika.Controllers
         [HttpPost]
         public async Task<IActionResult> createTransaction(Transaction transaction)
         {
-            var newTransaction = await _context.Transactions.AddAsync(new Transaction(
+            /*var newTransaction = await _context.Transactions.AddAsync(new Transaction(
                 transaction.RegisterNumber,
                 transaction.Adress,
                 transaction.Square,
@@ -30,7 +30,8 @@ namespace CrmBrusnika.Controllers
                 transaction.SearchObject));
             await _context.SaveChangesAsync();
 
-            return Ok(newTransaction);
+            return Ok(newTransaction);*/
+            throw new NotImplementedException();
         }
     }
 }

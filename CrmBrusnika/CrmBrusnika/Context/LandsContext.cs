@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Context
 {
-    public class LandContext : DbContext
+    public class LandsContext : DbContext
     {
-        public LandContext(DbContextOptions<LandContext> options) : base(options)
+        public LandsContext(DbContextOptions<LandsContext> options) : base(options)
         {
 
         }

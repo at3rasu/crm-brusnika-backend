@@ -24,7 +24,7 @@ builder.Services.AddDbContext<TransactionsContext>(options => {
 }
 );
 
-builder.Services.AddDbContext<LandContext>(options => {
+builder.Services.AddDbContext<LandsContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
 }
 );
