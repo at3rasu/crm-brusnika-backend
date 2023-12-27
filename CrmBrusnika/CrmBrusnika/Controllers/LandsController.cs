@@ -10,7 +10,7 @@ namespace CrmBrusnika.Controllers
 {
     [Route("api/lands/")]
     [ApiController]
-    public class LandsController : ControllerBase
+    public class LandsController
     {
         private readonly LandsContext _context;
 
@@ -19,6 +19,7 @@ namespace CrmBrusnika.Controllers
             _context = context;
         }
 
+        [Route("create")]
         [HttpPost]
         public async Task<Land> createLand(Land land)
         {
@@ -35,30 +36,30 @@ namespace CrmBrusnika.Controllers
             return newLand;
         }
 
-
-        [HttpPut("{id}")]
-        public async Task<IResult> PutTodoItem(Guid id, Land todoItem)
+        /*[Route("put")]
+        [HttpPut()]
+        public async Task<IResult> UpdateLand(Guid id, Land land)
         {
-            if (id != todoItem.Id)
-            {
-                return Results.BadRequest("land ID mismatch");
-            }
-
-            _context.Entry(todoItem).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                if (id != land.Id)
+                    return Results.BadRequest("land ID mismatch");
+
+                var landToUpdate = await GetLand(id);
+                
+                if (landToUpdate == null)
+                    return Results.NotFound($"Land with Id = {id} not found");
+
+                await _context.Lands.Update(land);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                return Results.NotFound();
+                throw new Exception();
             }
+        }*/
 
-            return Results.NoContent();
-        }
-
-        [HttpGet("{id}")]
+        [Route("get-land")]
+        [HttpGet()]
         public async Task<IResult> GetLand(Guid id)
         {
             try
@@ -77,6 +78,7 @@ namespace CrmBrusnika.Controllers
             }
         }
 
+        [Route("")]
         [HttpGet()]
         public async Task<IEnumerable<Land>> GetLands()
         {

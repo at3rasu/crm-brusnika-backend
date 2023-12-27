@@ -39,7 +39,6 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
                     .AllowAnyHeader()
                     .AllowCredentials();
                 }));
-
 builder.Services.AddCors();
 builder.Services.AddControllers();
 
