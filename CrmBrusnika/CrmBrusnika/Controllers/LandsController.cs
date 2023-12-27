@@ -36,27 +36,6 @@ namespace CrmBrusnika.Controllers
             return newLand;
         }
 
-        /*[Route("put")]
-        [HttpPut()]
-        public async Task<IResult> UpdateLand(Guid id, Land land)
-        {
-            try
-            {
-                if (id != land.Id)
-                    return Results.BadRequest("land ID mismatch");
-
-                var landToUpdate = await GetLand(id);
-                
-                if (landToUpdate == null)
-                    return Results.NotFound($"Land with Id = {id} not found");
-
-                await _context.Lands.Update(land);
-            }
-            catch (Exception)
-            {
-                throw new Exception();
-            }
-        }*/
 
         [Route("get-land")]
         [HttpGet()]
