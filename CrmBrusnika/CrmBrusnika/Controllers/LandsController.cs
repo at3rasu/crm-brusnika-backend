@@ -3,8 +3,6 @@ using CrmBrusnika.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
-using System.Text.Json;
 
 namespace CrmBrusnika.Controllers
 {
@@ -19,7 +17,6 @@ namespace CrmBrusnika.Controllers
             _context = context;
         }
 
-        [Route("create")]
         [HttpPost]
         public async Task<Land> createLand(Land land)
         {
@@ -36,28 +33,19 @@ namespace CrmBrusnika.Controllers
             return newLand;
         }
 
-
-        [Route("get-land")]
-        [HttpGet()]
-        public async Task<IResult> GetLand(Guid id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Land>> GetLand(Guid id)
         {
-            try
-            {
-                var result = await _context.Lands.FindAsync(id);
+            var land = await _context.Lands.FindAsync(id);
 
-                if (result == null)
-                {
-                    return Results.NotFound(result);
-                }
-                return Results.Ok(result);
-            }
-            catch (Exception)
+            if (land == null)
             {
-                throw new Exception();
+                throw new Exception("Land is not found");
             }
+
+            return land;
         }
 
-        [Route("")]
         [HttpGet()]
         public async Task<IEnumerable<Land>> GetLands()
         {
@@ -69,6 +57,50 @@ namespace CrmBrusnika.Controllers
             {
                 throw new Exception();
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IResult> PutTodoItem(Guid id, Land land)
+        {
+            if (id != land.Id)
+            {
+                return Results.BadRequest(land);
+            }
+
+            _context.Entry(land).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (GetLand(id) == null)
+                {
+                    return Results.NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Results.NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IResult> DeleteTodoItem(Guid id)
+        {
+            var todoItem = await _context.Lands.FindAsync(id);
+            if (todoItem == null)
+            {
+                return Results.NotFound();
+            }
+
+            _context.Lands.Remove(todoItem);
+            await _context.SaveChangesAsync();
+
+            return Results.NoContent();
         }
     }
 }

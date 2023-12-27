@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc();
+builder.Services.AddMvcCore();
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -29,6 +30,7 @@ builder.Services.AddDbContext<LandsContext>(options => {
 }
 );
 builder.Services.AddControllersWithViews();
+
 
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
                 builder =>
