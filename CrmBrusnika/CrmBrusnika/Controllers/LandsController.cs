@@ -37,25 +37,24 @@ namespace CrmBrusnika.Controllers
         }
 
         /*[Route("put")]
-        [HttpPut("{id:Guid}")]
-        public async Task<ActionResult<Land>> UpdateEmployee(Guid id, Land land)
+        [HttpPut()]
+        public async Task<IResult> UpdateLand(Guid id, Land land)
         {
             try
             {
                 if (id != land.Id)
-                    return BadRequest("Employee ID mismatch");
+                    return Results.BadRequest("land ID mismatch");
 
-                var employeeToUpdate = await _context.(id);
+                var landToUpdate = await GetLand(id);
+                
+                if (landToUpdate == null)
+                    return Results.NotFound($"Land with Id = {id} not found");
 
-                if (employeeToUpdate == null)
-                    return NotFound($"Employee with Id = {id} not found");
-
-                return await employeeRepository.UpdateEmployee(land);
+                await _context.Lands.Update(land);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error updating data");
+                throw new Exception();
             }
         }*/
 
@@ -72,6 +71,20 @@ namespace CrmBrusnika.Controllers
                     return Results.NotFound(result);
                 }
                 return Results.Ok(result);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        [Route("")]
+        [HttpGet()]
+        public async Task<IEnumerable<Land>> GetLands()
+        {
+            try
+            {
+                return await _context.Lands.ToListAsync();
             }
             catch (Exception)
             {
