@@ -23,6 +23,11 @@ builder.Services.AddDbContext<TransactionsContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
 }
 );
+
+builder.Services.AddDbContext<LandContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
+}
+);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
