@@ -18,6 +18,7 @@ namespace CrmBrusnika.Controllers
         }
 
         [HttpPost]
+        [Route("create")]
         public async Task<ActionResult<Land>> createLand(Land land)
         {
             var newLand = new Land(
