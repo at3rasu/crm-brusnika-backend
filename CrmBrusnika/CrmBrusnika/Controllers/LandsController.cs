@@ -60,7 +60,7 @@ namespace CrmBrusnika.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutLand(Guid id, Land land)
+        public async Task<ActionResult<Land>> PutLand(Guid id, Land land)
         {
             if (id != land.Id)
             {
@@ -72,6 +72,7 @@ namespace CrmBrusnika.Controllers
             try
             {
                 await _context.SaveChangesAsync();
+                return land;
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,23 +85,21 @@ namespace CrmBrusnika.Controllers
                     throw;
                 }
             }
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTodoItem(Guid id)
+        public async Task<ActionResult<Land>> DeleteLand(Guid id)
         {
-            var todoItem = await _context.Lands.FindAsync(id);
-            if (todoItem == null)
+            var land = await _context.Lands.FindAsync(id);
+            if (land == null)
             {
                 return NotFound();
             }
 
-            _context.Lands.Remove(todoItem);
+            _context.Lands.Remove(land);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return land;
         }
     }
 }
