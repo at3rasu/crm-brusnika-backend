@@ -8,7 +8,7 @@ namespace CrmBrusnika.Controllers
 {
     [Route("api/lands/")]
     [ApiController]
-    public class LandsController
+    public class LandsController : ControllerBase
     {
         private readonly LandsContext _context;
 
@@ -18,7 +18,7 @@ namespace CrmBrusnika.Controllers
         }
 
         [HttpPost]
-        public async Task<Land> createLand(Land land)
+        public async Task<ActionResult<Land>> createLand(Land land)
         {
             var newLand = new Land(
                 land.RegisterNumber,
@@ -40,7 +40,7 @@ namespace CrmBrusnika.Controllers
 
             if (land == null)
             {
-                throw new Exception("Land is not found");
+                return NotFound();
             }
 
             return land;
@@ -60,11 +60,11 @@ namespace CrmBrusnika.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IResult> PutTodoItem(Guid id, Land land)
+        public async Task<ActionResult> PutLand(Guid id, Land land)
         {
             if (id != land.Id)
             {
-                return Results.BadRequest(land);
+                return BadRequest(land);
             }
 
             _context.Entry(land).State = EntityState.Modified;
@@ -77,7 +77,7 @@ namespace CrmBrusnika.Controllers
             {
                 if (GetLand(id) == null)
                 {
-                    return Results.NotFound();
+                    return NotFound();
                 }
                 else
                 {
@@ -85,22 +85,22 @@ namespace CrmBrusnika.Controllers
                 }
             }
 
-            return Results.NoContent();
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IResult> DeleteTodoItem(Guid id)
+        public async Task<ActionResult> DeleteTodoItem(Guid id)
         {
             var todoItem = await _context.Lands.FindAsync(id);
             if (todoItem == null)
             {
-                return Results.NotFound();
+                return NotFound();
             }
 
             _context.Lands.Remove(todoItem);
             await _context.SaveChangesAsync();
 
-            return Results.NoContent();
+            return NoContent();
         }
     }
 }
