@@ -3,6 +3,7 @@
     public class ObjectEntities
     {
         public Guid Id { get; set; }
-        public double LegalValue { get; set; }
+        public double JuridicalCost { get; set; }
+
     }
 }
