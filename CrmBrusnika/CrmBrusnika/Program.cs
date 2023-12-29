@@ -30,6 +30,12 @@ builder.Services.AddDbContext<LandsContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
 }
 );
+
+builder.Services.AddDbContext<ObjectEntitiesContext>(options => {
+    options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
+}
+);
+
 builder.Services.AddControllersWithViews();
 
 
