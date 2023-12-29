@@ -2,6 +2,7 @@
 using CrmBrusnika.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace CrmBrusnika.Controllers
 {
@@ -9,9 +10,9 @@ namespace CrmBrusnika.Controllers
     [ApiController]
     public class ObjectEntitiesController : ControllerBase
     {
-        private readonly ObjectEntitiesContext _context;
+        private readonly LandsContext _context;
 
-        public ObjectEntitiesController(ObjectEntitiesContext context)
+        public ObjectEntitiesController(LandsContext context)
         {
             _context = context;
         }
@@ -26,12 +27,14 @@ namespace CrmBrusnika.Controllers
                 entity.AvailabilityEngineeringNetworks,
                 entity.TransportationaAccessibility
             );
+            newEntity.LandId = entity.LandId;
+            newEntity.Land = await _context.Lands.FindAsync(newEntity.LandId);
             var response = await _context.AddAsync(newEntity);
             await _context.SaveChangesAsync();
             return newEntity;
         }
 
-        [HttpGet("{id}")]
+        /*[HttpGet("{id}")]
         public async Task<ActionResult<ObjectEntity>> GetEntity(Guid id)
         {
             var entity = await _context.ObjectEntities.FindAsync(id);
@@ -55,6 +58,6 @@ namespace CrmBrusnika.Controllers
             {
                 throw new Exception();
             }
-        }
+        }*/
     }
 }

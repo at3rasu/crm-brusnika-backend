@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace CrmBrusnika.Data.Migrations
+namespace CrmBrusnika.Migrations.Lands
 {
     /// <inheritdoc />
-    public partial class CreateUsersContext : Migration
+    public partial class AdObjectEntitiesInLands : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

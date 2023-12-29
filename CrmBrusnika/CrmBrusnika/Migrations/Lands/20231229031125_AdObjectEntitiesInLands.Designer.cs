@@ -3,6 +3,7 @@ using System;
 using CrmBrusnika.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CrmBrusnika.Migrations.Lands
 {
     [DbContext(typeof(LandsContext))]
-    partial class LandsContextModelSnapshot : ModelSnapshot
+    [Migration("20231229031125_AdObjectEntitiesInLands")]
+    partial class AdObjectEntitiesInLands
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace CrmBrusnika.Migrations.Lands
                     b.HasIndex("LandId")
                         .IsUnique();
 
-                    b.ToTable("Entities");
+                    b.ToTable("ObjectEntity");
                 });
 
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>

@@ -22,6 +22,39 @@ namespace CrmBrusnika.Migrations.ObjectEntities
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("CrmBrusnika.Models.Land", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AboutHolder")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("AreaInMeters")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("RegisterNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WhoIsFound")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Land");
+                });
+
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
                 {
                     b.Property<Guid>("Id")
@@ -39,6 +72,9 @@ namespace CrmBrusnika.Migrations.ObjectEntities
                     b.Property<double>("JuridicalCost")
                         .HasColumnType("double precision");
 
+                    b.Property<Guid>("LandId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("PermissiveSide")
                         .IsRequired()
                         .HasColumnType("text");
@@ -49,7 +85,26 @@ namespace CrmBrusnika.Migrations.ObjectEntities
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LandId")
+                        .IsUnique();
+
                     b.ToTable("ObjectEntities");
+                });
+
+            modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
+                {
+                    b.HasOne("CrmBrusnika.Models.Land", "Land")
+                        .WithOne("Entity")
+                        .HasForeignKey("CrmBrusnika.Models.ObjectEntity", "LandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Land");
+                });
+
+            modelBuilder.Entity("CrmBrusnika.Models.Land", b =>
+                {
+                    b.Navigation("Entity");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,6 +11,6 @@ namespace CrmBrusnika.Context
         }
 
         public DbSet<Land> Lands { get; set; }
-
+        public DbSet<ObjectEntity> Entities { get; set; }
     }
 }

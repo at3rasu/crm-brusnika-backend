@@ -3,6 +3,8 @@
     public class ObjectEntity
     {
         public Guid Id { get; set; }
+        public Guid LandId { get; set; }
+        public Land? Land { get; set; }
         public double JuridicalCost { get; set; }
         public string PermissiveSide { get; set; } = null!;
         public string GeotechnicalConditions { get; set; } = null!;

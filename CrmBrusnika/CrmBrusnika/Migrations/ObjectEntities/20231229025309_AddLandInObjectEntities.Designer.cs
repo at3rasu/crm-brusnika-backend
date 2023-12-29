@@ -3,17 +3,20 @@ using System;
 using CrmBrusnika.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CrmBrusnika.Migrations.Lands
+namespace CrmBrusnika.Migrations.ObjectEntities
 {
-    [DbContext(typeof(LandsContext))]
-    partial class LandsContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ObjectEntitiesContext))]
+    [Migration("20231229025309_AddLandInObjectEntities")]
+    partial class AddLandInObjectEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,7 +91,7 @@ namespace CrmBrusnika.Migrations.Lands
                     b.HasIndex("LandId")
                         .IsUnique();
 
-                    b.ToTable("Entities");
+                    b.ToTable("ObjectEntities");
                 });
 
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
@@ -104,7 +107,8 @@ namespace CrmBrusnika.Migrations.Lands
 
             modelBuilder.Entity("CrmBrusnika.Models.Land", b =>
                 {
-                    b.Navigation("Entity");
+                    b.Navigation("Entity")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

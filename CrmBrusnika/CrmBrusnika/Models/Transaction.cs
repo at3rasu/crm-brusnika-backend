@@ -6,6 +6,9 @@ namespace CrmBrusnika.Models
     {
         public Guid Id { get; set; }
         public Land Land { get; set; } = null!;
-        public StagesTransactions Stage { get; set; }
+        public Guid LandId { get; set; }
+        public ObjectEntity Entity { get; set; } = null!;
+        public Guid EntityId { get; set; }
+        public StagesTransactions Stage { get; set; } = StagesTransactions.InProcess!;
     }
 }

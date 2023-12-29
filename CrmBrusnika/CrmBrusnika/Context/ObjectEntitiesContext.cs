@@ -11,6 +11,5 @@ namespace CrmBrusnika.Context
         }
 
         public DbSet<ObjectEntity> ObjectEntities { get; set; }
-
     }
 }

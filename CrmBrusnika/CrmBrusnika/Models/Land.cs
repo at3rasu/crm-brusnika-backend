@@ -9,6 +9,7 @@
         public string AboutHolder { get; set; } = null!;
         public double Price { get; set; }
         public string WhoIsFound { get; set; } = null!;
+        public ObjectEntity? Entity { get; set; } = null!;
 
         public Land(
             int registerNumber,
