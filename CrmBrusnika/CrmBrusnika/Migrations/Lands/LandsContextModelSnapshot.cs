@@ -32,7 +32,7 @@ namespace CrmBrusnika.Migrations.Lands
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Adress")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
 

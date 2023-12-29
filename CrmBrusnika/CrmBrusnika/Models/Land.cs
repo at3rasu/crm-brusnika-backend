@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public int RegisterNumber { get; set; }
-        public string Adress { get; set; } = null!;
+        public string Address { get; set; } = null!;
         public string AreaInMeters { get; set; } = null!;
         public string AboutHolder { get; set; } = null!;
         public double Price { get; set; }
@@ -12,14 +12,14 @@
 
         public Land(
             int registerNumber,
-            string adress,
+            string address,
             string areaInMeters,
             string aboutHolder,
             double price,
             string whoIsFound)
         {
             RegisterNumber = registerNumber;
-            Adress = adress;
+            Address = address;
             AreaInMeters = areaInMeters;
             AboutHolder = aboutHolder;
             Price = price;
