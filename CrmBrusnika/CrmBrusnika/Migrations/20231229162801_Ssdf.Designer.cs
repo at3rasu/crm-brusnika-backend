@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CrmBrusnika.Migrations
 {
     [DbContext(typeof(LandsContext))]
-    [Migration("20231229041007_EditTransactionModel")]
-    partial class EditTransactionModel
+    [Migration("20231229162801_Ssdf")]
+    partial class Ssdf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
