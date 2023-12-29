@@ -9,18 +9,25 @@ namespace CrmBrusnika.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly TransactionsContext _context;
+        private readonly LandsContext _context;
         
-        public TransactionsController(TransactionsContext context)
+        public TransactionsController(LandsContext context)
         {
             _context = context;
         }
 
         [HttpPost]
-        public async Task<IActionResult> createTransaction(Transaction transaction)
+        public async Task<ActionResult<Transaction>> CreateTransaction(Transaction transaction)
         {
-            
-            throw new NotImplementedException();
+            var newTransaction = new Transaction(
+                transaction.EntityId,
+                transaction.Stage);
+           
+            newTransaction.Entity = await _context.Entities.FindAsync(transaction.EntityId);
+
+            newTransaction.Land = await _context.Lands.FindAsync(newTransaction.Entity.LandId);
+
+            return newTransaction;
         }
     }
 }

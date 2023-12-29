@@ -3,16 +3,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CrmBrusnika.Migrations.Lands
+namespace CrmBrusnika.Migrations.ObjectEntities
 {
     /// <inheritdoc />
-    public partial class AddObjectEntitiesInLands : Migration
+    public partial class EditLandinObjectEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ObjectEntity",
+                name: "Land",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RegisterNumber = table.Column<int>(type: "integer", nullable: false),
+                    Address = table.Column<string>(type: "text", nullable: false),
+                    AreaInMeters = table.Column<string>(type: "text", nullable: false),
+                    AboutHolder = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
+                    WhoIsFound = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Land", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ObjectEntities",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -25,18 +42,18 @@ namespace CrmBrusnika.Migrations.Lands
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ObjectEntity", x => x.Id);
+                    table.PrimaryKey("PK_ObjectEntities", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ObjectEntity_Lands_LandId",
+                        name: "FK_ObjectEntities_Land_LandId",
                         column: x => x.LandId,
-                        principalTable: "Lands",
+                        principalTable: "Land",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ObjectEntity_LandId",
-                table: "ObjectEntity",
+                name: "IX_ObjectEntities_LandId",
+                table: "ObjectEntities",
                 column: "LandId",
                 unique: true);
         }
@@ -45,7 +62,10 @@ namespace CrmBrusnika.Migrations.Lands
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ObjectEntity");
+                name: "ObjectEntities");
+
+            migrationBuilder.DropTable(
+                name: "Land");
         }
     }
 }

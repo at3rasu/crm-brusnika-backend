@@ -2,6 +2,7 @@
 using CrmBrusnika.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CrmBrusnika.Controllers
@@ -28,16 +29,19 @@ namespace CrmBrusnika.Controllers
                 entity.TransportationaAccessibility
             );
             newEntity.LandId = entity.LandId;
-            newEntity.Land = await _context.Lands.FindAsync(newEntity.LandId);
+            var land = await _context.Lands.FindAsync(entity.LandId);
+            newEntity.Land = land;
             var response = await _context.AddAsync(newEntity);
             await _context.SaveChangesAsync();
             return newEntity;
         }
 
-        /*[HttpGet("{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<ObjectEntity>> GetEntity(Guid id)
         {
-            var entity = await _context.ObjectEntities.FindAsync(id);
+            var entity = await _context.Entities
+                .Include(e => e.Land)
+                .FirstOrDefaultAsync(e => e.Id == id);
 
             if (entity == null)
             {
@@ -52,12 +56,18 @@ namespace CrmBrusnika.Controllers
         {
             try
             {
-                return await _context.ObjectEntities.ToListAsync();
+                var res = new List<ObjectEntity>();
+                foreach (var el in await _context.Entities.ToListAsync())
+                {
+                    el.Land = await _context.Lands.FindAsync(el.LandId);
+                    res.Add(el);
+                }
+                return res;
             }
             catch (Exception)
             {
                 throw new Exception();
             }
-        }*/
+        }
     }
 }

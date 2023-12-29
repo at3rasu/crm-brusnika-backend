@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CrmBrusnika.Migrations.Lands
+namespace CrmBrusnika.Migrations.ObjectEntities
 {
-    [DbContext(typeof(LandsContext))]
-    [Migration("20231229025942_AddObjectEntitiesInLands")]
-    partial class AddObjectEntitiesInLands
+    [DbContext(typeof(ObjectEntitiesContext))]
+    [Migration("20231229032719_EditLandinObjectEntity")]
+    partial class EditLandinObjectEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace CrmBrusnika.Migrations.Lands
 
                     b.HasKey("Id");
 
-                    b.ToTable("Lands");
+                    b.ToTable("Land");
                 });
 
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
@@ -91,7 +91,7 @@ namespace CrmBrusnika.Migrations.Lands
                     b.HasIndex("LandId")
                         .IsUnique();
 
-                    b.ToTable("ObjectEntity");
+                    b.ToTable("ObjectEntities");
                 });
 
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
@@ -107,8 +107,7 @@ namespace CrmBrusnika.Migrations.Lands
 
             modelBuilder.Entity("CrmBrusnika.Models.Land", b =>
                 {
-                    b.Navigation("Entity")
-                        .IsRequired();
+                    b.Navigation("Entity");
                 });
 #pragma warning restore 612, 618
         }

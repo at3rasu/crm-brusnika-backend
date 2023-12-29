@@ -64,10 +64,7 @@ app.UseRouting();
 app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-});
+app.MapControllers();
 
 //app.UseHttpsRedirection();
 app.MapControllerRoute(

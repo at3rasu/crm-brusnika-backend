@@ -5,7 +5,7 @@
 namespace CrmBrusnika.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateUsersContex : Migration
+    public partial class AddOnModelCreating : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

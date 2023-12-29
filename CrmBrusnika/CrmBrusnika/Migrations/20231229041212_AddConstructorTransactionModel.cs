@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace CrmBrusnika.Migrations.Lands
+namespace CrmBrusnika.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLandContext : Migration
+    public partial class AddConstructorTransactionModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace CrmBrusnika.Migrations.Lands
+namespace CrmBrusnika.Migrations
 {
     [DbContext(typeof(LandsContext))]
-    [Migration("20231229032100_AddEntitiesInLandsContext")]
-    partial class AddEntitiesInLandsContext
+    [Migration("20231229041007_EditTransactionModel")]
+    partial class EditTransactionModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,6 +94,30 @@ namespace CrmBrusnika.Migrations.Lands
                     b.ToTable("Entities");
                 });
 
+            modelBuilder.Entity("CrmBrusnika.Models.Transaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("LandId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Stage")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.HasIndex("LandId");
+
+                    b.ToTable("transactions");
+                });
+
             modelBuilder.Entity("CrmBrusnika.Models.ObjectEntity", b =>
                 {
                     b.HasOne("CrmBrusnika.Models.Land", "Land")
@@ -101,6 +125,25 @@ namespace CrmBrusnika.Migrations.Lands
                         .HasForeignKey("CrmBrusnika.Models.ObjectEntity", "LandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Land");
+                });
+
+            modelBuilder.Entity("CrmBrusnika.Models.Transaction", b =>
+                {
+                    b.HasOne("CrmBrusnika.Models.ObjectEntity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CrmBrusnika.Models.Land", "Land")
+                        .WithMany()
+                        .HasForeignKey("LandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entity");
 
                     b.Navigation("Land");
                 });
