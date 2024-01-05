@@ -1,7 +1,6 @@
 ﻿using CrmBrusnika.Context;
 using CrmBrusnika.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
