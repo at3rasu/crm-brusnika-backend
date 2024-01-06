@@ -35,10 +35,14 @@ services:
   client:
     image: crm-frontend
     ports:
-      -  80:3000
+      -  3000:3000
 
-  #proxy:
-  #  image: nginx:mainline
+  proxy:
+    image: nginx:mainline
+    volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+        - "80:80"  
 
     
 volumes:
