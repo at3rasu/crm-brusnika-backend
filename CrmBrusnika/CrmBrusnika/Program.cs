@@ -15,7 +15,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 
 builder.Services.AddDbContext<UsersContext>(options => {
     options.UseNpgsql(builder.Configuration.GetConnectionString("CrmBrusnikaDb"));
-    }
+}
 );
 
 builder.Services.AddDbContext<TransactionsContext>(options => {
@@ -35,7 +35,25 @@ builder.Services.AddDbContext<ObjectEntitiesContext>(options => {
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddCors();
+
+builder.Services
+            .AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                    .WithOrigins(
+                        "http://172.20.10.2:3000",
+                        "http://82.97.243.12:3000",
+                        "http://192.168.1.210:3000",
+                        "http://localhost:3000",
+                        "http://localhost",
+                        "http://192.168.1.210")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    );
+            });
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -47,16 +65,19 @@ app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Example v1"));
 // }
 app.UseRouting();
-
-app.UseCors(builder => builder.AllowAnyOrigin());
-
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
+
 
 //app.UseHttpsRedirection();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.UseEndpoints(endpoints => {
+    endpoints.MapControllers();
+    endpoints.MapRazorPages();
+});
 
 app.Run();

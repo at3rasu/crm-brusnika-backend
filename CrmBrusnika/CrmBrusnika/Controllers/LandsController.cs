@@ -1,10 +1,12 @@
 ﻿using CrmBrusnika.Context;
 using CrmBrusnika.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
+    [EnableCors("CorsPolicy")]
     [Route("api/lands/")]
     [ApiController]
     public class LandsController : ControllerBase
