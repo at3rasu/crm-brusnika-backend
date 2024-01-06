@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrmBrusnika.Controllers
 {
+    [EnableCors("CorsPolicy")]
     [Route("api/entities/")]
     [ApiController]
     public class ObjectEntitiesController : ControllerBase
