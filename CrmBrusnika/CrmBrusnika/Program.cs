@@ -35,16 +35,6 @@ builder.Services.AddDbContext<ObjectEntitiesContext>(options => {
 
 builder.Services.AddControllersWithViews();
 
-
-builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
-                builder =>
-                {
-                    builder
-                    .WithOrigins("http://localhost:3000")
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials();
-                }));
 builder.Services.AddCors();
 builder.Services.AddControllers();
 
@@ -58,7 +48,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseRouting();
 
-app.UseCors("CorsPolicy");
+app.UseCors(builder => builder.AllowAnyOrigin());
 
 app.UseAuthorization();
 app.MapControllers();
