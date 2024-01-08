@@ -1,5 +1,6 @@
 ﻿using CrmBrusnika.Context;
 using CrmBrusnika.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ namespace CrmBrusnika.Controllers
         {
             _context = context;
         }
+        private bool LandExists(Guid id) => _context.Lands.Any(e => e.Id == id);
+        private bool EntityExists(Guid id) => _context.Entities.Any(e => e.Id == id);
 
         [HttpPost]
         public async Task<ActionResult<ObjectEntity>> createEntity(ObjectEntity entity)
@@ -27,9 +30,11 @@ namespace CrmBrusnika.Controllers
                 entity.AvailabilityEngineeringNetworks,
                 entity.TransportationaAccessibility
             );
+            if (!LandExists(entity.LandId))
+                return NotFound("Land is not found");
             newEntity.LandId = entity.LandId;
-            var land = await _context.Lands.FindAsync(entity.LandId);
-            newEntity.Land = land;
+            newEntity.Land = await _context.Lands.FindAsync(entity.LandId);
+
             var response = await _context.AddAsync(newEntity);
             await _context.SaveChangesAsync();
             return newEntity;
@@ -67,6 +72,42 @@ namespace CrmBrusnika.Controllers
             {
                 throw new Exception();
             }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ObjectEntity>> PutLand(Guid id, ObjectEntity entity)
+        {
+            if (id != entity.Id)
+            {
+                return BadRequest(entity);
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (DbUpdateConcurrencyException) when (!EntityExists(id))
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ObjectEntity>> DeleteEntity(Guid id)
+        {
+            var entity = await _context.Entities.FindAsync(id);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            _context.Entities.Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return entity;
         }
     }
 }
