@@ -17,6 +17,7 @@ namespace CrmBrusnika.Controllers
         {
             _context = context;
         }
+        private bool LandExists(Guid id) => _context.Lands.Any(e => e.Id == id);
 
         [HttpPost]
         public async Task<ActionResult<Land>> createLand(Land land)
@@ -75,16 +76,9 @@ namespace CrmBrusnika.Controllers
                 await _context.SaveChangesAsync();
                 return land;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException) when (!LandExists(id))
             {
-                if (GetLand(id) == null)
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
         }
 
